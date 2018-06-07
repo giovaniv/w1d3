@@ -38,18 +38,19 @@ function calculateSalesTax(salesData, taxRates) {
 
   var result = {};
 
-  // var companyName = salesData[1].name;
-  // var totalSales = addCompanySalesTotal(salesData[1].sales);
-  // var totalTaxes = addCompanyTaxes(totalSales, salesData[1].province);
-  // result[companyName] = { totalSales: totalSales, totalTaxes: totalTaxes };
-  // console.log(result);
-
   for (var i = 0; i < salesData.length; i++) {
 
     var companyName = salesData[i].name;
     var totalSales = addCompanySalesTotal(salesData[i].sales);
     var totalTaxes = addCompanyTaxes(totalSales, salesData[i].province);
-    result[companyName] = { totalSales: totalSales, totalTaxes: totalTaxes };
+
+    if (!result[companyName]) {
+      result[companyName] = { totalSales: totalSales, totalTaxes: totalTaxes };
+    }
+    else {
+      result[companyName].totalSales += totalSales;
+      result[companyName].totalTaxes += totalTaxes;
+    }
 
   }
 
